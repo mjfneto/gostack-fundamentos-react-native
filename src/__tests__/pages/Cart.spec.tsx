@@ -45,8 +45,6 @@ useCartMocked.mockReturnValue({
   ],
   increment: jest.fn(),
   decrement: jest.fn(),
-  sum: 8000,
-  size: 15,
 });
 
 describe('Dashboard', () => {
@@ -93,8 +91,6 @@ describe('Dashboard', () => {
       ],
       increment,
       decrement: jest.fn(),
-      sum: 2000,
-      size: 5,
     });
 
     const { getByTestId } = render(<Cart />);
@@ -123,8 +119,6 @@ describe('Dashboard', () => {
       ],
       increment: jest.fn(),
       decrement,
-      sum: 2000,
-      size: 5,
     });
 
     const { getByTestId } = render(<Cart />);

@@ -18,8 +18,6 @@ interface Product {
 
 interface CartContext {
   products: Product[];
-  sum: number;
-  size: number;
   addToCart(item: Omit<Product, 'quantity'>): void;
   increment(id: string): void;
   decrement(id: string): void;
@@ -29,8 +27,6 @@ const CartContext = createContext<CartContext | null>(null);
 
 const CartProvider: React.FC = ({ children }) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [sum, setSum] = useState(0);
-  const [size, setSize] = useState(0);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
@@ -72,16 +68,6 @@ const CartProvider: React.FC = ({ children }) => {
     [products],
   );
 
-  useEffect(() => {
-    setSum(
-      products.reduce(
-        (total, { price, quantity }) => total + quantity * price,
-        0,
-      ),
-    );
-    setSize(products.reduce((total, { quantity }) => total + quantity, 0));
-  }, [products]);
-
   const increment = useCallback(
     async id => {
       setProducts(
@@ -115,8 +101,8 @@ const CartProvider: React.FC = ({ children }) => {
   );
 
   const value = React.useMemo(
-    () => ({ addToCart, increment, decrement, products, sum, size }),
-    [products, addToCart, increment, decrement, sum, size],
+    () => ({ addToCart, increment, decrement, products }),
+    [products, addToCart, increment, decrement],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
